@@ -5,15 +5,22 @@ import { ButtonComponent } from "./components/button/button.component";
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet,
-    ButtonComponent
+    RouterOutlet
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
+
 })
 export class AppComponent {
   title = 'McParty';
+
+
+
+
+
+  
+
+
 }
 
 
-//Arquitectura normal vi que aqui hace los servicios y los componentes 
