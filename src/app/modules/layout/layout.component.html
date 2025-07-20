@@ -1,32 +1,34 @@
-<mat-drawer-container>
-    <mat-drawer mode="side" opened>
-
-
-        <P>Menu</P>
-        <button mat-button>Hola Gabriel </button>
-
-
-         <button mat-button>Hola Gabriel </button>
+<header class="top-header">
+    <button mat-icon-button (click)="toggleDrawer()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title">McParty</span>
+</header>
 
 
 
 
 
+<mat-drawer-container class="drawer-container">
 
 
+    <mat-drawer #drawer mode="side" position="start" opened>
+
+        <mat-nav-list>
+            <mat-list-item routerLink="/consumo" routerLinkActive="active">Consumo</mat-list-item>
+            <mat-list-item routerLink="/concursos" routerLinkActive="active">Concursos</mat-list-item>
+            <mat-list-item routerLink="/informacion" routerLinkActive="active">Información</mat-list-item>
+            <mat-list-item routerLink="/caritas-pintadas" routerLinkActive="active">Caritas Pintadas</mat-list-item>
+        </mat-nav-list>
     </mat-drawer>
+
+ 
+    <mat-drawer-content class="main-content">
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
 
 
 
 
 
 </mat-drawer-container>
-
-<main class="main-content">
-    <router-outlet>
-
-        
-    </router-outlet>
-
-
-</main>
