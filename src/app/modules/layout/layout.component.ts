@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav'
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
@@ -12,7 +12,8 @@ import { MatListModule } from '@angular/material/list';
     RouterOutlet,
     MatIcon,
     MatDrawer,
-    MatListModule
+    MatListModule,
+    RouterLink
   ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']

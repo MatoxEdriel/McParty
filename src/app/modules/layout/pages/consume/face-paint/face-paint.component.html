@@ -1,0 +1,17 @@
+<h2>Niños</h2>
+<div class="facepaint-section">
+
+  <div *ngFor="let item of boysFacePaints" class="facepaint-item">
+    <img [src]="item.image" alt="{{item.name}}">
+    <p>{{item.name}}</p>
+  </div>
+</div>
+
+<h2>Niñas</h2>
+<div class="facepaint-section">
+
+  <div *ngFor="let item of girlsFacePaints" class="facepaint-item">
+    <img [src]="item.image" alt="{{item.name}}">
+    <p>{{item.name}}</p>
+  </div>
+</div>

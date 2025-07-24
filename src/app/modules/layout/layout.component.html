@@ -15,14 +15,39 @@
     <mat-drawer #drawer mode="side" position="start" opened>
 
         <mat-nav-list>
-            <mat-list-item routerLink="/consumo" routerLinkActive="active">Consumo</mat-list-item>
-            <mat-list-item routerLink="/concursos" routerLinkActive="active">Concursos</mat-list-item>
+            <mat-list-item routerLink="/consumo" routerLinkActive="active">
+                <div class="flex flex-col items-center justify-center w-full">
+
+                    <mat-icon>fastfood</mat-icon>
+                    <span>Consumo</span>
+
+                </div>
+
+            </mat-list-item>
+
+            <mat-list-item routerLink="/concursos" routerLinkActive="active">
+                <div>
+                    <mat-icon>
+                        military_tech
+                    </mat-icon>
+                    <span>
+                        Concursos
+                    </span>
+
+                </div>
+            </mat-list-item>
             <mat-list-item routerLink="/informacion" routerLinkActive="active">Información</mat-list-item>
-            <mat-list-item routerLink="/caritas-pintadas" routerLinkActive="active">Caritas Pintadas</mat-list-item>
+
+
+            <mat-list-item routerLink="/face-paint" routerLinkActive="active">
+                <mat-icon>palette</mat-icon>
+                <span>Caritas Pintadas</span>
+            </mat-list-item>
+
         </mat-nav-list>
     </mat-drawer>
 
- 
+
     <mat-drawer-content class="main-content">
         <router-outlet></router-outlet>
     </mat-drawer-content>
