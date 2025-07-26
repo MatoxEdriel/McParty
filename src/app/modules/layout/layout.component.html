@@ -1,59 +1,71 @@
-<header class="top-header">
-    <button mat-icon-button (click)="toggleDrawer()">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 right-0 h-16 bg-[#FFC72C] text-black flex items-center px-4 z-[1000] shadow-md">
+    <button mat-icon-button (click)="toggleDrawer()" class="mr-4">
         <mat-icon>menu</mat-icon>
     </button>
-    <span class="title">McParty</span>
+    <span class="font-bold text-xl">McParty</span>
 </header>
 
 
 
+<mat-drawer-container class="mt-16 h-[calc(100vh-4rem)]">
+    <mat-drawer #drawer mode="side" position="start" opened class="w-56 p-2">
+        <mat-nav-list class="flex flex-col gap-6 py-2">
 
-
-<mat-drawer-container class="drawer-container">
-
-
-    <mat-drawer #drawer mode="side" position="start" opened>
-
-        <mat-nav-list>
-            <mat-list-item routerLink="/consumo" routerLinkActive="active">
-                <div class="flex flex-col items-center justify-center w-full">
-
-                    <mat-icon>fastfood</mat-icon>
-                    <span>Consumo</span>
-
+            <mat-list-item routerLink="/consumo" routerLinkActive="active" class="!h-auto">
+                <div class="group flex flex-col items-center justify-center w-full gap-1 py-3 cursor-pointer 
+    transition-colors duration-200 hover:text-[#DA291C]">
+                    <mat-icon class="text-3xl leading-none transition-colors duration-200 group-hover:text-[#DA291C]">
+                        fastfood
+                    </mat-icon>
+                    <span class="text-sm transition-colors duration-200 group-hover:text-[#DA291C]">
+                        Consumo
+                    </span>
                 </div>
-
             </mat-list-item>
 
-            <mat-list-item routerLink="/concursos" routerLinkActive="active">
-                <div>
-                    <mat-icon>
+
+            <mat-list-item routerLink="/concursos" routerLinkActive="active" class="!h-auto">
+                <div
+                    class="group flex flex-col items-center justify-center w-full gap-1 py-3 cursor-pointer transition-colors duration-200 hover:text-mcyellow">
+                    <mat-icon class="text-3xl leading-none transition-colors duration-200 group-hover:text-mcyellow">
                         military_tech
                     </mat-icon>
-                    <span>
+                    <span class="text-sm transition-colors duration-200 group-hover:text-mcyellow">
                         Concursos
                     </span>
-
                 </div>
             </mat-list-item>
-            <mat-list-item routerLink="/informacion" routerLinkActive="active">Información</mat-list-item>
 
+            <mat-list-item routerLink="/informacion" routerLinkActive="active" class="!h-auto">
+                <div
+                    class="group flex flex-col items-center justify-center w-full gap-1 py-3 cursor-pointer transition-colors duration-200 hover:text-mcyellow">
+                    <mat-icon class="text-3xl leading-none transition-colors duration-200 group-hover:text-mcyellow">
+                        info
+                    </mat-icon>
+                    <span class="text-sm transition-colors duration-200 group-hover:text-mcyellow">
+                        Información
+                    </span>
+                </div>
+            </mat-list-item>
 
-            <mat-list-item routerLink="/face-paint" routerLinkActive="active">
-                <mat-icon>palette</mat-icon>
-                <span>Caritas Pintadas</span>
+            <mat-list-item routerLink="/face-paint" routerLinkActive="active" class="!h-auto">
+                <div
+                    class="group flex flex-col items-center justify-center w-full gap-1 py-3 cursor-pointer transition-colors duration-200 hover:text-mcyellow">
+                    <mat-icon class="text-3xl leading-none transition-colors duration-200 group-hover:text-mcyellow">
+                        palette
+                    </mat-icon>
+                    <span class="text-sm transition-colors duration-200 group-hover:text-mcyellow">
+                        Caritas pintadas
+                    </span>
+                </div>
             </mat-list-item>
 
         </mat-nav-list>
     </mat-drawer>
 
-
-    <mat-drawer-content class="main-content">
+    <!-- CONTENT -->
+    <mat-drawer-content class="p-4">
         <router-outlet></router-outlet>
     </mat-drawer-content>
-
-
-
-
-
 </mat-drawer-container>

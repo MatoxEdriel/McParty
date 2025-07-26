@@ -1,17 +1,21 @@
-<h2>Niños</h2>
-<div class="facepaint-section">
+<mat-tab-group>
 
-  <div *ngFor="let item of boysFacePaints" class="facepaint-item">
-    <img [src]="item.image" alt="{{item.name}}">
-    <p>{{item.name}}</p>
-  </div>
-</div>
+  <mat-tab label="Niño">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      <div *ngFor="let pintura of boysFacePaints" class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img [src]="pintura.image" alt="Pintura Niño" class="w-full h-40 object-cover rounded mb-2" />
+        <span class="text-center font-semibold">{{ pintura.name }}</span>
+      </div>
+    </div>
+  </mat-tab>
 
-<h2>Niñas</h2>
-<div class="facepaint-section">
+  <mat-tab label="Niña">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      <div *ngFor="let pintura of girlsFacePaints" class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img [src]="pintura.image" alt="Pintura Niña" class="w-full h-40 object-cover rounded mb-2" />
+        <span class="text-center font-semibold">{{ pintura.name }}</span>
+      </div>
+    </div>
+  </mat-tab>
 
-  <div *ngFor="let item of girlsFacePaints" class="facepaint-item">
-    <img [src]="item.image" alt="{{item.name}}">
-    <p>{{item.name}}</p>
-  </div>
-</div>
+</mat-tab-group>
