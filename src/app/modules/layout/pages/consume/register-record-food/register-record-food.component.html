@@ -1,15 +1,15 @@
 <div class="flex h-screen bg-gray-50">
-  <!-- CONTENEDOR IZQUIERDO -->
+
   <div class="flex flex-col flex-1 p-4">
-    <!-- TOP SECTION -->
+
     <div class="bg-red-300 p-4 mb-4"></div>
 
-    <!-- CANTIDAD ACTUAL -->
+
     <div class="text-3xl font-bold text-right mb-2">
       {{ quantityBuffer || 1 }}
     </div>
 
-    <!-- TECLADO NUMÉRICO -->
+   
     <div class="flex gap-2 flex-wrap touch-none select-none justify-center mb-4">
       <button *ngFor="let n of digits; let i = index"
         class="w-12 h-12 rounded-full border text-lg font-bold flex items-center justify-center
