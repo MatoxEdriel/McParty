@@ -1,31 +1,50 @@
-<p>competition works!</p>
 <mat-tab-group>
-    <mat-tab label="4-6 Ages">
+    <mat-tab label="Kids">
+
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+
+
+            <mat-card *ngFor="let game of games" class="cursor-pointer transition-all duration-300" (click)="selectGame(game)
+    ">
+                <mat-card-header>
+                    <mat-card-title>{{game.name}}</mat-card-title>
+                </mat-card-header>
+
+                <img mat-card-image src="myparty2.png" class="w-50 h-50 object-contain">
+
+                <mat-card-content>
+                    <p>{{game.description}}</p>
+
+                </mat-card-content>
+
+
+            </mat-card>
+
+
 
 
 
         </div>
 
+
+
+
+
+
+
+
     </mat-tab>
-
-
-    <mat-tab label="6-10 Ages">
-
-
-
-    </mat-tab>
-
-
-
-
-
+    
 
     <mat-tab label="Adults">
 
 
 
     </mat-tab>
+
+
+
 
 
 

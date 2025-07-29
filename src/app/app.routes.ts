@@ -10,7 +10,7 @@ import { WelcomeLobbyComponent } from './modules/layout/Feature/Lobby/welcome-lo
 export const routes: Routes = [
   {
     path: '',
-    component: WelcomeLobbyComponent, 
+    component: LayoutComponent, 
     // component: LayoutComponent,
     children: [
 

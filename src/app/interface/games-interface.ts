@@ -1,0 +1,10 @@
+
+
+
+export interface IGame{
+    id?: string;
+    name:string;
+    description: string;
+    participates: string[];
+    imgUrl?: string;
+}
