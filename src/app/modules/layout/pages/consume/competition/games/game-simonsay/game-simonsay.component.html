@@ -1,6 +1,46 @@
-<div class="relative bg-gray-100 p-6 rounded-lg">
-  <div class="absolute -top-5 left-4 bg-yellow-400 px-3 py-1 rounded-full shadow-md">
-    Nuevo
-  </div>
-  <p>Contenido de la tarjeta</p>
-</div>
+<mat-horizontal-stepper linear #stepper>
+  <!-- Paso 1: Instrucciones -->
+  <mat-step [stepControl]="firstFormGroup">
+    <ng-template matStepLabel>Instrucciones</ng-template>
+    
+    <mat-card class="p-6 bg-yellow-100">
+      <h2 class="text-lg font-semibold mb-4">👋 ¡Hola!</h2>
+      <p>
+        Vamos a jugar "Simón dice". Escucha con atención y sigue las instrucciones...
+      </p>
+    </mat-card>
+
+    <div class="mt-4">
+      <button mat-raised-button color="primary" (click)="stepper.next()">Siguiente</button>
+    </div>
+  </mat-step>
+
+  <!-- Paso 2: Ingreso de nombres -->
+  <mat-step [stepControl]="secondFormGroup">
+    <ng-template matStepLabel>Participantes</ng-template>
+
+    <mat-card class="p-6 bg-white">
+      <form (ngSubmit)="addParticipant()">
+        <mat-form-field class="w-full">
+          <input matInput placeholder="Nombre del participante" [(ngModel)]="newParticipant" name="participant" required />
+        </mat-form-field>
+
+        <button mat-flat-button color="accent" type="submit">Agregar</button>
+      </form>
+
+      <div class="mt-6 grid grid-cols-1 gap-4">
+        <div *ngFor="let p of participants" class="flex justify-between items-center p-3 border rounded-lg shadow-sm">
+          <span>{{ p }}</span>
+          <!-- Estrellas vacías -->
+          <div class="flex gap-1">
+            <mat-icon *ngFor="let star of stars">star_border</mat-icon>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <div class="mt-4">
+      <button mat-raised-button color="primary" (click)="stepper.next()">Comenzar juego</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
