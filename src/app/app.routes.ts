@@ -5,6 +5,7 @@ import { CompetitionComponent } from './modules/layout/pages/consume/competition
 import { FacePaintComponent } from './modules/layout/pages/consume/face-paint/face-paint.component';
 import { RegisterRecordFoodComponent } from './modules/layout/pages/consume/register-record-food/register-record-food.component';
 import { WelcomeLobbyComponent } from './modules/layout/Feature/Lobby/welcome-lobby/welcome-lobby.component';
+import { GameSimonsayComponent } from './modules/layout/pages/consume/competition/games/game-simonsay/game-simonsay.component';
 
 // app-routing.module.ts
 export const routes: Routes = [
@@ -17,8 +18,8 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'registerFood', component: RegisterRecordFoodComponent },
       { path: 'face-paint', component: FacePaintComponent},
-      { path: 'competition' , component: CompetitionComponent}
-
+      { path: 'competition' , component: CompetitionComponent},
+      { path : 'games/:id', component: GameSimonsayComponent }
     ]
   },
 
