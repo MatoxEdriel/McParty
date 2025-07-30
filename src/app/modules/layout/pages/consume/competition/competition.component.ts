@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatTab, MatTabGroup } from "@angular/material/tabs";
 import { IGame } from '../../../../../interface/games-interface';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-competition',
   imports: [
@@ -17,6 +18,12 @@ import { MatCardModule } from '@angular/material/card';
 export class CompetitionComponent {
 
 
+
+  constructor(private router: Router ){
+    
+
+
+  }
 
   // games: IGame[] = [];
 
@@ -50,7 +57,11 @@ selectGame(game: IGame){
 }
 
 
+goToGame(game: IGame){
+  this.router.navigate(['/games', game.id]);
+}
 
+ 
 
 
 }
