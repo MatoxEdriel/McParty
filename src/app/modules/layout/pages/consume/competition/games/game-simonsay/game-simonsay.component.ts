@@ -2,15 +2,21 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import lottie, { AnimationItem } from 'lottie-web';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormGroup, FormBuilder, FormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input'
+import { MatInput, MatInputModule } from '@angular/material/input'
+import { ReactiveFormsModule } from '@angular/forms';
+
+
+
 @Component({
   selector: 'app-game-simonsay',
   standalone: true,
-  imports: [ MatIconModule ,MatCard, MatStepperModule, CommonModule, MatFormFieldModule, FormsModule],
+  imports: [
+    ReactiveFormsModule,
+    MatIconModule, MatCard, MatStepperModule, CommonModule, MatFormFieldModule, FormsModule, MatInputModule],
   templateUrl: './game-simonsay.component.html',
   styleUrls: ['./game-simonsay.component.css']
 })
@@ -32,7 +38,9 @@ export class GameSimonsayComponent implements AfterViewInit {
 
   constructor(private fb: FormBuilder) {
     this.firstFormGroup = this.fb.group({});
-    this.secondFormGroup = this.fb.group({});
+    this.secondFormGroup = this.fb.group({
+      nombre: ['', Validators.required]
+    });
   }
 
   addParticipant() {
