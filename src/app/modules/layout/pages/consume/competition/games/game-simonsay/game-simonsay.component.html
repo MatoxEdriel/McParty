@@ -2,7 +2,7 @@
   <!-- Paso 1: Instrucciones -->
   <mat-step [stepControl]="firstFormGroup">
     <ng-template matStepLabel>Instrucciones</ng-template>
-    
+
     <mat-card class="p-6 bg-yellow-100">
       <h2 class="text-lg font-semibold mb-4">👋 ¡Hola!</h2>
       <p>
@@ -21,11 +21,15 @@
 
     <mat-card class="p-6 bg-white">
       <form (ngSubmit)="addParticipant()">
-        <mat-form-field class="w-full">
-          <input matInput placeholder="Nombre del participante" [(ngModel)]="newParticipant" name="participant" required />
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Nombres
+          </mat-label>
+          <input matInput [(ngModel)]="newParticipant" name="nombre">
         </mat-form-field>
 
         <button mat-flat-button color="accent" type="submit">Agregar</button>
+      
       </form>
 
       <div class="mt-6 grid grid-cols-1 gap-4">
@@ -33,7 +37,11 @@
           <span>{{ p }}</span>
           <!-- Estrellas vacías -->
           <div class="flex gap-1">
+
+
             <mat-icon *ngFor="let star of stars">star_border</mat-icon>
+
+
           </div>
         </div>
       </div>

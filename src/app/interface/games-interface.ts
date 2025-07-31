@@ -8,3 +8,8 @@ export interface IGame{
     participates: string[];
     imgUrl?: string;
 }
+
+
+
+
+

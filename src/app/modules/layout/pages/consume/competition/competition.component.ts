@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-competition',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -59,6 +60,7 @@ selectGame(game: IGame){
 
 goToGame(game: IGame){
   this.router.navigate(['/games', game.id]);
+  console.log('Funciona')
 }
 
  
