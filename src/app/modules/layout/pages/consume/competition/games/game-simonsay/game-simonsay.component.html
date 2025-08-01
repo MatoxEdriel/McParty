@@ -5,65 +5,69 @@
 
     <mat-card class="p-6 bg-yellow-100">
       <div class="flex items-center gap-4">
-        <div #anim class="w-14 h-14  rounded-full">
-        </div>
+        <div #anim class="w-14 h-14 rounded-full"></div>
         <h2 class="text-lg font-semibold mb-4">¡Hola!</h2>
-
       </div>
 
-      <p> 
+      <p>
         Vamos a jugar "Simón dice". Escucha con atención y sigue las instrucciones...
       </p>
+      <mat-divider>
+        <p class="mb-4">
+          Escucha con atención y sigue las instrucciones que Simón te indique.
+          ¡Pero cuidado! Solo debes obedecer si la orden empieza con <strong>"Simón dice"</strong>.
+        </p>
+      </mat-divider>
     </mat-card>
 
     <div class="mt-4">
       <button mat-raised-button (click)="stepper.next()"
-        class="bg-yellow-400 hover:bg-yellow-500  font-semibold shadow-md px-4 py-2 rounded">
+        class="bg-yellow-400 hover:bg-yellow-500 font-semibold shadow-md px-4 py-2 rounded">
         Siguiente
       </button>
     </div>
-
   </mat-step>
 
   <!-- Paso 2: Ingreso de nombres -->
   <mat-step [stepControl]="secondFormGroup">
     <ng-template matStepLabel>Participantes</ng-template>
 
-    <mat-card class="p-6 bg-white">
-      <form [formGroup]="secondFormGroup" (ngSubmit)="addParticipant()">
-        <mat-form-field>
-          <mat-label>
-            Nombres
-          </mat-label>
-          <input matInput formControlName="nombre" required>
-        </mat-form-field>
+    <mat-card class="p-6 bg-white transition duration-300 cursor-pointer" (click)="handleCardClick()">
+      <div class="flex items-center space-x-4">
+        <div #write class="w-40 h-40" [hidden]="showSecondForm"></div>
 
-        <button mat-flat-button color="accent" type="submit">Agregar</button>
+        <div class="flex flex-col">
+          <h2 class="text-lg font-semibold mb-2">¡Es tu turno!</h2>
+          <p>Haz clic aquí para empezar a ingresar los nombres de los participantes.</p>
+        </div>
+      </div>
 
-      </form>
+      <div [hidden]="!showSecondForm" (click)="$event.stopPropagation()" class="mt-6">
+        <form [formGroup]="secondFormGroup" (ngSubmit)="addParticipant()">
+          <mat-form-field class="w-full">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="nombre" required />
+          </mat-form-field>
 
-      <div class="mt-6 grid grid-cols-1 gap-4">
-        <div *ngFor="let p of participants" class="flex justify-between items-center p-3 border rounded-lg shadow-sm">
-          <span>{{ p }}</span>
-          <!-- Estrellas vacías -->
-          <div class="flex gap-1">
+          <button mat-flat-button color="accent" type="submit">Agregar</button>
+        </form>
 
-
-            <mat-icon *ngFor="let star of stars">star_border</mat-icon>
-
-
+        <div class="mt-6 grid grid-cols-1 gap-4">
+          <div *ngFor="let p of participants" class="flex justify-between items-center p-3 border rounded-lg shadow-sm">
+            <span>{{ p }}</span>
+            <div class="flex gap-1">
+              <mat-icon *ngFor="let star of stars">star_border</mat-icon>
+            </div>
           </div>
         </div>
       </div>
     </mat-card>
 
     <div class="mt-4">
-      <button 
-      class="bg-yellow-400 
-      hover: bg-tellow-500
-      font-semibold shadow-md
-      px-4 py-2 rounded" 
-      mat-raised-button color="primary" (click)="stepper.next()">Comenzar juego</button>
+      <button mat-raised-button color="primary"
+        class="bg-yellow-400 hover:bg-yellow-500 font-semibold shadow-md px-4 py-2 rounded" (click)="stepper.next()">
+        Comenzar juego
+      </button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

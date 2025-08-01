@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon';
 import { MatInput, MatInputModule } from '@angular/material/input'
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 
@@ -16,15 +17,24 @@ import { ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatIconModule, MatCard, MatStepperModule, CommonModule, MatFormFieldModule, FormsModule, MatInputModule],
+    MatIconModule,
+    MatCard, 
+    MatStepperModule, 
+    CommonModule, 
+    MatFormFieldModule, 
+    FormsModule, 
+    MatInputModule,
+    MatDividerModule],
   templateUrl: './game-simonsay.component.html',
   styleUrls: ['./game-simonsay.component.css']
 })
 export class GameSimonsayComponent implements AfterViewInit {
   @ViewChild('anim', { static: true }) anim!: ElementRef<HTMLDivElement>;
   @ViewChild('okAnim', { static: true }) okAnim!: ElementRef<HTMLDivElement>;
+  @ViewChild('write', {static: true}) write!: ElementRef<HTMLDivElement>;
 
 
+  showSecondForm = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
@@ -34,6 +44,7 @@ export class GameSimonsayComponent implements AfterViewInit {
 
   animation!: AnimationItem;
   okAnimation!: AnimationItem;
+  writeAnimation!: AnimationItem;
 
 
   constructor(private fb: FormBuilder) {
@@ -50,6 +61,12 @@ export class GameSimonsayComponent implements AfterViewInit {
     }
   }
 
+  handleCardClick() {
+  if (!this.showSecondForm) {
+    this.showSecondForm = true;
+  }
+}
+
   ngAfterViewInit(): void {
     this.animation = lottie.loadAnimation({
       container: this.anim.nativeElement,
@@ -61,6 +78,21 @@ export class GameSimonsayComponent implements AfterViewInit {
         preserveAspectRatio: 'xMidYMid meet',
       }
     });
+
+    this.writeAnimation = lottie.loadAnimation({
+      container: this.write.nativeElement,
+      renderer : 'svg',
+      loop:true,
+      autoplay: true,
+      path: 'lottie/pencil.json',
+      rendererSettings:{
+          preserveAspectRatio: 'xMidYMid meet',
+      }
+
+
+
+    });
+
 
     this.okAnimation = lottie.loadAnimation({
       container: this.okAnim.nativeElement,
