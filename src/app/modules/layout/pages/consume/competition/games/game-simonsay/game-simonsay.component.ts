@@ -9,6 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInput, MatInputModule } from '@angular/material/input'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import { suggestions } from './suggerest/suggestions.game';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+} from '@angular/animations';
+
 
 
 
@@ -18,20 +26,29 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     ReactiveFormsModule,
     MatIconModule,
-    MatCard, 
-    MatStepperModule, 
-    CommonModule, 
-    MatFormFieldModule, 
-    FormsModule, 
+    MatCard,
+    MatStepperModule,
+    CommonModule,
+    MatFormFieldModule,
+    FormsModule,
     MatInputModule,
     MatDividerModule],
   templateUrl: './game-simonsay.component.html',
-  styleUrls: ['./game-simonsay.component.css']
+  styleUrls: ['./game-simonsay.component.css'],
+  animations: [
+    trigger('fadeSuggestion', [
+      transition('* => *', [
+        style({ opacity: 0, transform: 'scale(0.95)' }),
+        animate('200ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+      ]),
+    ]),
+
+  ]
 })
 export class GameSimonsayComponent implements AfterViewInit {
   @ViewChild('anim', { static: true }) anim!: ElementRef<HTMLDivElement>;
   @ViewChild('okAnim', { static: true }) okAnim!: ElementRef<HTMLDivElement>;
-  @ViewChild('write', {static: true}) write!: ElementRef<HTMLDivElement>;
+  @ViewChild('write', { static: true }) write!: ElementRef<HTMLDivElement>;
 
 
   showSecondForm = false;
@@ -46,26 +63,40 @@ export class GameSimonsayComponent implements AfterViewInit {
   okAnimation!: AnimationItem;
   writeAnimation!: AnimationItem;
 
+  currentSuggestion = '';
 
   constructor(private fb: FormBuilder) {
     this.firstFormGroup = this.fb.group({});
     this.secondFormGroup = this.fb.group({
-      nombre: ['', Validators.required]
+      name: ['', Validators.required]
     });
   }
 
   addParticipant() {
-    if (this.newParticipant.trim()) {
-      this.participants.push(this.newParticipant.trim());
-      this.newParticipant = '';
+    const name = this.secondFormGroup.get('name')?.value?.trim();
+    if (name) {
+
+      this.participants.push(name);
+      this.secondFormGroup.reset();
+
     }
+
+
+  }
+
+  setRandomSuggestion(): void {
+
+    const index = Math.floor(Math.random() * suggestions.length);
+    this.currentSuggestion = suggestions[index];
+
   }
 
   handleCardClick() {
-  if (!this.showSecondForm) {
-    this.showSecondForm = true;
+    if (!this.showSecondForm) {
+      this.showSecondForm = true;
+      this.setRandomSuggestion();
+    }
   }
-}
 
   ngAfterViewInit(): void {
     this.animation = lottie.loadAnimation({
@@ -81,12 +112,12 @@ export class GameSimonsayComponent implements AfterViewInit {
 
     this.writeAnimation = lottie.loadAnimation({
       container: this.write.nativeElement,
-      renderer : 'svg',
-      loop:true,
+      renderer: 'svg',
+      loop: true,
       autoplay: true,
       path: 'lottie/pencil.json',
-      rendererSettings:{
-          preserveAspectRatio: 'xMidYMid meet',
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid meet',
       }
 
 

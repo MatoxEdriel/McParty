@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LayoutComponent } from './modules/layout/layout.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @Component({

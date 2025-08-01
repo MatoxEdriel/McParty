@@ -28,12 +28,29 @@
     </div>
   </mat-step>
 
-  <!-- Paso 2: Ingreso de nombres -->
+
   <mat-step [stepControl]="secondFormGroup">
     <ng-template matStepLabel>Participantes</ng-template>
 
-    <mat-card class="p-6 bg-white transition duration-300 cursor-pointer" (click)="handleCardClick()">
-      <div class="flex items-center space-x-4">
+
+    <mat-card class="p-6 bg-white transition duration-300 cursor-pointer relative" (click)="handleCardClick()">
+
+      <div *ngIf="showSecondForm"
+        class="bg-yellow-400 text-black rounded-xl pt-4 pr-10 pb-4 pl-4 max-w-sm shadow-lg font-semibold cursor-pointer absolute top-4 right-4"
+        (click)="setRandomSuggestion()" [@fadeSuggestion]="currentSuggestion" style="z-index: 10;">
+        <p class="text-sm">{{ currentSuggestion }}</p>
+
+        <button mat-icon-button class="absolute top-1 right-1 pointer-events-none">
+          <mat-icon class="text-sky-500">autorenew</mat-icon>
+        </button>
+      </div>
+
+
+
+
+
+
+      <div class="flex items-center space-x-4 mt-16">
         <div #write class="w-40 h-40" [hidden]="showSecondForm"></div>
 
         <div class="flex flex-col">
@@ -46,7 +63,8 @@
         <form [formGroup]="secondFormGroup" (ngSubmit)="addParticipant()">
           <mat-form-field class="w-full">
             <mat-label>Nombres</mat-label>
-            <input matInput formControlName="nombre" required />
+            <input matInput formControlName="name" required (blur)="addParticipant()" />
+
           </mat-form-field>
 
           <button mat-flat-button color="accent" type="submit">Agregar</button>
