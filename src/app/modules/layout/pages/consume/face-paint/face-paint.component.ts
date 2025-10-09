@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { InvoicesComponent } from "../invoices/invoices.component";
 
 @Component({
   selector: 'app-face-paint',
   imports: [
     CommonModule,
-    MatTabsModule
-  ],
+    MatTabsModule,
+    InvoicesComponent
+],
   templateUrl: './face-paint.component.html',
   styleUrl: './face-paint.component.scss'
 })

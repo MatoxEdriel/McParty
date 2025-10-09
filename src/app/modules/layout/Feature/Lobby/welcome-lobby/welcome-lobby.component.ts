@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import lottie, { AnimationItem } from 'lottie-web';
-import { QRCodeModule } from 'angularx-qrcode';
 
 
 @Component({
   selector: 'app-welcome-lobby',
   standalone: true,
   imports: [
-    QRCodeModule
+    
+    
   ],
   templateUrl: './welcome-lobby.component.html',
   styleUrls: ['./welcome-lobby.component.scss']
