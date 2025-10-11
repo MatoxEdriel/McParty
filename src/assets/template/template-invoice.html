@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .invoice-container {
+            width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: {
+                    {
+                    headerBgColor
+                }
+            }
+
+            ;
+
+            color: {
+                    {
+                    headerTextColor
+                }
+            }
+
+            ;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .logo {
+            max-width: 120px;
+            margin-bottom: 10px;
+        }
+
+        .invoice-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .invoice-info div {
+            width: 48%;
+        }
+
+        .invoice-info p {
+            margin: 4px 0;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .items-table th {
+            background-color: {
+                    {
+                    headerBgColor
+                }
+            }
+
+            ;
+
+            color: {
+                    {
+                    headerTextColor
+                }
+            }
+
+            ;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <img src="{{logoUrl}}" alt="Logo" class="logo" />
+            <h1>Factura #{{InvoiceId}}</h1>
+        </div>
+
+        <div class="invoice-info">
+            <div>
+                <p><strong>Cliente:</strong> {{CustomerName}}</p>
+                <p><strong>Dirección:</strong> {{BillingAddress}}</p>
+                <p><strong>Ciudad:</strong> {{BillingCity}}</p>
+                <p><strong>País:</strong> {{BillingCountry}}</p>
+                <p><strong>Código Postal:</strong> {{BillingPostalCode}}</p>
+            </div>
+            <div>
+                <p><strong>Fecha:</strong> {{InvoiceDate}}</p>
+                <p><strong>Correo:</strong> {{CustomerEmail}}</p>
+                <p><strong>Teléfono:</strong> {{CustomerPhone}}</p>
+            </div>
+        </div>
+
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#items}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{quantity}}</td>
+                    <td>{{unitPrice}}</td>
+                    <td>{{subtotal}}</td>
+                </tr>
+                {{/items}}
+            </tbody>
+        </table>
+
+        <p class="total">Total: {{Total}}</p>
+    </div>
+</body>
+
+<footer style="position: fixed; bottom: 0; width: 100%; text-align: center;">
+  <img src="{{footerImage}}" alt="Pie de página" width="200">
+</footer>
+
+</html>
