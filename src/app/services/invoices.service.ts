@@ -15,16 +15,21 @@ export class InvoicesService {
 
 
 
-  downloadPdfFromHtml(html: string) {
-    return this.http.post(`${this.baseUrl}/pdf/html`, { html }, { responseType: 'blob' });
+  downloadPdf(options: { table?: any; html?: string; invoice?: any }) {
+    return this.http.post(`${this.baseUrl}/pdf`, options, { responseType: 'blob' });
   }
 
-  downloadPdfFromTable(tableData: any) {
-    return this.http.post(`${this.baseUrl}/pdf`, tableData, { responseType: 'blob' });
-  }
-  getAllInvoices(): Observable<Invoice[]> {
+  // getAllInvoices(): Observable<Invoice[]> {
 
-    return this.http.get<Invoice[]>(this.baseUrl);
+  //   return this.http.get<Invoice[]>(this.baseUrl);
+
+  // }
+
+  getAllInvoices(page: number, limit: number): Observable<any> {
+
+    const params = `?page=${page}&limit=${limit}`;
+
+    return this.http.get<any>(`${this.baseUrl}${params}`);
 
   }
 

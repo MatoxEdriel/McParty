@@ -4,6 +4,7 @@ import { CommonModule, NgForOf } from '@angular/common';
 import { windowWhen } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TemplateService } from '../../../../../services/template.service';
+import { Title } from '@angular/platform-browser';
 
 
 interface TableData {
@@ -28,6 +29,11 @@ export class InvoicesComponent implements OnInit {
 
 
   invoices: any[] = []
+  currentPage = 1;
+  limit = 10;
+  totalPages = 0;
+  totalRecords = 0;
+
 
   tableData!: TableData;
   constructor(private readonly invoicesServices: InvoicesService,
@@ -35,9 +41,6 @@ export class InvoicesComponent implements OnInit {
     private templateService: TemplateService
 
   ) { }
-
-
-
 
 
   private downloadBlob(pdfBlob: Blob, filename: string) {
@@ -49,89 +52,112 @@ export class InvoicesComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
   }
-
-  downloadPdf() {
+  downloadPdfFromTable() {
     if (!this.tableData) return;
-    this.invoicesServices.downloadPdfFromTable(this.tableData).subscribe((pdfBlob: Blob) => {
-      this.downloadBlob(pdfBlob, 'facturas.pdf');
-    })
+    const payload = {
+      ...this.tableData,
+      headerBgColor: '#28a745',
+      headerTextColor: '#ffffff'
+    }
+
+    this.invoicesServices.downloadPdf({ table: payload })
+      .subscribe(blob => this.downloadBlob(blob, 'facturas.pdf'));
   }
+
+
   downloadInvoicePdf(invoice: any) {
-    const items = invoice.items ?? []; 
-
     const html = `
-  <div style="width:800px; padding:30px; font-family:sans-serif; color:#333; border:1px solid #ddd;">
-    <div style="text-align:center; background-color:#007bff; color:#fff; padding:20px; border-radius:5px 5px 0 0;">
-    <img src="http://localhost:3000/assets/img/imagen.png" style="max-width:120px;">
-    <h1>Factura #${invoice.InvoiceId}</h1>
-    </div>
-
-    <div style="display:flex; justify-content:space-between; margin-top:20px;">
+  <div style="width:800px; margin:auto; padding:30px; font-family: 'Arial', sans-serif; color:#333; border:1px solid #ddd; border-radius:10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    
+    <!-- Header -->
+    <div style="display:flex; justify-content:space-between; align-items:center; background:#007bff; color:#fff; padding:20px; border-radius:10px 10px 0 0;">
       <div>
-        <p><strong>Cliente:</strong> ${invoice.CustomerName}</p>
-        <p><strong>Dirección:</strong> ${invoice.BillingAddress}</p>
-        <p><strong>Ciudad:</strong> ${invoice.BillingCity}</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_NIKE.svg" width="100" alt="Logo" />
       </div>
-      <div>
-        <p><strong>Fecha:</strong> ${new Date(invoice.InvoiceDate).toLocaleDateString()}</p>
+      <div style="text-align:right;">
+        <h1 style="margin:0; font-size:24px;">Factura #${invoice.InvoiceId}</h1>
+        <p style="margin:0; font-size:14px;">Fecha: ${new Date(invoice.InvoiceDate).toLocaleDateString()}</p>
       </div>
     </div>
 
-    <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+    <!-- Cliente y dirección -->
+    <div style="display:flex; justify-content:space-between; margin-top:20px; padding:0 10px;">
+      <div>
+        <p style="margin:2px 0;"><strong>Cliente:</strong> ${invoice.CustomerName}</p>
+        <p style="margin:2px 0;"><strong>Dirección:</strong> ${invoice.BillingAddress}</p>
+        <p style="margin:2px 0;"><strong>Ciudad:</strong> ${invoice.BillingCity}</p>
+      </div>
+      <div style="text-align:right;">
+        <p style="margin:2px 0;"><strong>Teléfono:</strong> ${invoice.CustomerPhone || '-'}</p>
+        <p style="margin:2px 0;"><strong>Email:</strong> ${invoice.CustomerEmail || '-'}</p>
+      </div>
+    </div>
+
+    <!-- Tabla de productos -->
+    <table style="width:100%; border-collapse:collapse; margin-top:20px; font-size:14px;">
       <thead>
-        <tr style="background-color:#007bff; color:#fff;">
-          <th style="border:1px solid #ccc; padding:8px;">Producto</th>
-          <th style="border:1px solid #ccc; padding:8px;">Cantidad</th>
-          <th style="border:1px solid #ccc; padding:8px;">Precio</th>
-          <th style="border:1px solid #ccc; padding:8px;">Subtotal</th>
+        <tr style="background-color:#007bff; color:#fff; text-align:left;">
+          <th style="padding:10px; border:1px solid #ccc;">Producto</th>
+          <th style="padding:10px; border:1px solid #ccc;">Cantidad</th>
+          <th style="padding:10px; border:1px solid #ccc;">Precio</th>
+          <th style="padding:10px; border:1px solid #ccc;">Subtotal</th>
         </tr>
       </thead>
       <tbody>
-        ${items.map((item: any) => `
-          <tr>
-            <td style="border:1px solid #ccc; padding:8px;">${item.name}</td>
-            <td style="border:1px solid #ccc; padding:8px;">${item.quantity}</td>
-            <td style="border:1px solid #ccc; padding:8px;">${item.unitPrice}</td>
-            <td style="border:1px solid #ccc; padding:8px;">${item.subtotal}</td>
+        ${(invoice.items ?? []).map((item: any, index: number) => `
+          <tr style="background-color:${index % 2 === 0 ? '#f9f9f9' : '#ffffff'};">
+            <td style="padding:10px; border:1px solid #ccc;">${item.name}</td>
+            <td style="padding:10px; border:1px solid #ccc;">${item.quantity}</td>
+            <td style="padding:10px; border:1px solid #ccc;">${item.unitPrice}</td>
+            <td style="padding:10px; border:1px solid #ccc;">${item.subtotal}</td>
           </tr>
         `).join('')}
       </tbody>
     </table>
 
-    <p style="text-align:right; font-weight:bold; font-size:18px; margin-top:20px;">
+    <!-- Total -->
+    <div style="text-align:right; margin-top:20px; font-size:18px; font-weight:bold;">
       Total: ${invoice.Total}
-    </p>
+    </div>
 
-    <div style="text-align:center; margin-top:30px;">
-      <img src="${invoice.footerImage || 'assets/img/labra.png'}" style="max-width:200px;">
+    <!-- Footer -->
+    <div style="text-align:center; margin-top:30px; padding-top:15px; border-top:1px solid #ccc;">
+      <img src="${invoice.footerImage || 'assets/img/labra.png'}" style="max-width:200px; margin-bottom:5px;" />
+      <p style="font-size:12px; color:#666; margin:0;">Gracias por su compra</p>
     </div>
   </div>
   `;
 
-    this.invoicesServices.downloadPdfFromHtml(html).subscribe(pdfBlob => {
-      this.downloadBlob(pdfBlob, `factura_${invoice.InvoiceId}.pdf`);
-    });
+    this.invoicesServices.downloadPdf({ html })
+      .subscribe(blob => this.downloadBlob(blob, `factura_${invoice.InvoiceId}.pdf`));
   }
+
+
+
 
   ngOnInit() {
-    this.invoicesServices.getAllInvoices().subscribe({
-      next: (data) => {
-        this.invoices = data;
+    this.loadInvoices();
+  }
 
-        this.tableData = {
-          columns: ['InvoiceId', 'CustomerId', 'InvoiceDate', 'BillingCity', 'Total'],
-          data: this.invoices.map(inv => ({
-            ...inv
-          })),
-          headerBgColor: '#007bff',
-          headerTextColor: '#ffffff'
-        };
+  loadInvoices(page:number = 1){
+    this.invoicesServices.getAllInvoices(page, this.limit).subscribe({
+      next: (response) => {
+        this.invoices = response.data;
+        this.totalRecords = response.total;
+        this.totalPages = Math.ceil(this.totalRecords/ this.limit);
+        this.currentPage = page;
       },
-      error: (err) => console.error("Error al obtener invoices", err)
-    });
+      error: (err) => console.error('Error Cargando Facturas xd', err)
+
+    })
+  }
+
+  goToPage(page:number){
+    if(page >= 1 && page <= this.totalPages){
+      this.loadInvoices(page);
+    }
+
   }
 }
-function html2canvas(tempDiv: HTMLDivElement, arg1: { scale: number; }) {
-  throw new Error('Function not implemented.');
-}
+
 
