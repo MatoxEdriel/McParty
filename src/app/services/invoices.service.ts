@@ -19,11 +19,6 @@ export class InvoicesService {
     return this.http.post(`${this.baseUrl}/pdf`, options, { responseType: 'blob' });
   }
 
-  // getAllInvoices(): Observable<Invoice[]> {
-
-  //   return this.http.get<Invoice[]>(this.baseUrl);
-
-  // }
 
   getAllInvoices(page: number, limit: number): Observable<any> {
 

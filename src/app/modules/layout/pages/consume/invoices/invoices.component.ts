@@ -5,14 +5,10 @@ import { windowWhen } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TemplateService } from '../../../../../services/template.service';
 import { Title } from '@angular/platform-browser';
+import { TableData } from '../../../../../shared/interfaces/pdf.interface';
 
 
-interface TableData {
-  columns: string[];
-  data: any[];
-  headerBgColor?: string;
-  headerTextColor?: string;
-}
+
 
 @Component({
   selector: 'app-invoices',
@@ -25,17 +21,14 @@ interface TableData {
 
 export class InvoicesComponent implements OnInit {
 
-
-
-
   invoices: any[] = []
   currentPage = 1;
   limit = 10;
   totalPages = 0;
   totalRecords = 0;
-
-
   tableData!: TableData;
+
+  
   constructor(private readonly invoicesServices: InvoicesService,
     private http: HttpClient,
     private templateService: TemplateService
@@ -52,6 +45,9 @@ export class InvoicesComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+
+
+
   downloadPdfFromTable() {
     if (!this.tableData) return;
     const payload = {
@@ -139,21 +135,38 @@ export class InvoicesComponent implements OnInit {
     this.loadInvoices();
   }
 
-  loadInvoices(page:number = 1){
+
+  loadInvoices(page: number = 1) {
     this.invoicesServices.getAllInvoices(page, this.limit).subscribe({
       next: (response) => {
-        this.invoices = response.data;
-        this.totalRecords = response.total;
-        this.totalPages = Math.ceil(this.totalRecords/ this.limit);
-        this.currentPage = page;
+        this.invoices = response.data.items;
+        this.totalRecords = response.data.pagination.total;
+        this.totalPages = response.data.pagination.totalPage;
+        this.currentPage = response.data.pagination.page;
+
+
+        this.tableData = {
+          columns: [
+            'InvoiceId',
+            'CustomerId',
+            'InvoiceDate',
+            'BillingAddress',
+            'BillingCity',
+            'BillingState',
+            'BillingCountry',
+            'BillingPostalCode',
+            'Total'
+          ],
+          data: response.data.items
+        };
       },
       error: (err) => console.error('Error Cargando Facturas xd', err)
 
     })
   }
 
-  goToPage(page:number){
-    if(page >= 1 && page <= this.totalPages){
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
       this.loadInvoices(page);
     }
 

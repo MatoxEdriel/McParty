@@ -1,0 +1,19 @@
+<mat-form-field appearance="fill" class="w-full">
+
+  <mat-label>{{ label }}</mat-label>
+
+  <mat-select [placeholder]="placeholder" [formControl]="control" [disabled]="disabled || loading"
+    (selectionChange)="onChange($event.value)">
+    <!-- Loading State -->
+    <mat-option disabled *ngIf="loading">
+      Cargando...
+    </mat-option>
+
+    <!-- List Items -->
+    <mat-option *ngFor="let item of items" [value]="item[valueField]">
+      {{ item[displayField] }}
+    </mat-option>
+
+  </mat-select>
+
+</mat-form-field>

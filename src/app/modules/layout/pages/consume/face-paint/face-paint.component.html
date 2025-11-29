@@ -9,6 +9,15 @@
     </div>
   </mat-tab>
 
+
+  <app-material-select label="Seleccione usuario" [items]="users" valueField="id" displayField="name"
+    (changeValue)="onUserChange($event)">
+  </app-material-select>
+
+
+
+
+
   <mat-tab label="Niña">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
       <div *ngFor="let pintura of girlsFacePaints" class="bg-white rounded shadow p-4 flex flex-col items-center">
@@ -23,5 +32,5 @@
 
 <app-invoices>
 
-  
+
 </app-invoices>
