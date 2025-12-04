@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Invoice } from './invoice.interface';
+import { environment } from '../../env/environment.production';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,13 @@ import { Invoice } from './invoice.interface';
 
 export class InvoicesService {
 
-  private baseUrl = 'http://localhost:3000/api/invoice';
+
+  private preFix = '/invoice';
+  private baseUrl = environment.apiUrl + this.preFix;
+
+
+
+
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +32,8 @@ export class InvoicesService {
     const params = `?page=${page}&limit=${limit}`;
 
     return this.http.get<any>(`${this.baseUrl}${params}`);
+
+
 
   }
 
